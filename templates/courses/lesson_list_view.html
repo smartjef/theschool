@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{%block title%} Course {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+       <div class="d-flex m-4">
+          <a href="{% url 'index' %}">Home/</a>
+          <a href="{% url 'courses' %}">Course/</a>
+          <a href="." >{{object.slug}}/</a>
+          <a href="." >{{object.slug}}</a>
+       </div>
+    </div>
+ </div>
+<div class="container">
+    <div class="card p-5">
+        {% for lesson in subjects.lessons.all %}
+       <div class="course">
+        <img src="{{lesson.image.url}}" alt="..."> 
+          <span class="d-block ml-5">
+            <a href="#">Chapter-{{lesson.position}}: {{lesson.name}}</a> <br>
+            <p class="small">Created on <i>{{lesson.created_at}}</i> by <i>{{lesson.created_by}}</i></p>
+            <p class="small">{{lesson.description|truncatechars:75}}</p>
+          </span>
+        {% if user.is_authenticated %}
+        <div class="con ml-5 p-1">
+            <a href="{% url 'lesson_detail' slug=lesson.slug subject=subjects.slug standard=lesson.standard.slug %}" class="btn btn-success">View Course</a> <br>
+        </div>
+        {%else%}
+        <div class="con ml-5 p-1">
+            <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a> <br>
+        </div>
+        {%endif%}
+       </div>
+       {% endfor %}
+    </div>
+ </div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+
+{% load static %}
+{%block title%}
+    Result
+{%endblock title%}
+
+{%block content%}
+
+<div class="container">
+    <div class="slides">
+    {% for standard in standards %} 
+       <div class="col">
+          <span>
+          <img src="{{standard.image.url}}" height="200px" alt="...">
+          <h1>{{standard.name}}</h1>
+          <p>{{standard.description}}</p>
+          <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-success">View</a>
+          </span>
+       </div>
+    {% endfor %}
+    </div>
+ </div>
+
+{%endblock content%}

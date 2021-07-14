@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%block title%} Confirm deletion {% endblock title %}
+
+{% block content %}
+<center><h3>Are sure you want to delete ?</h3></center>
+<form action="" method="post">
+    {% csrf_token %}
+    <a href="{% url 'lesson_detail' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"><button>Cancel</button></a>
+    <a href="{% url 'lesson_delete' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"><button>Delete</button></a>
+</form>
+
+{% endblock content %}

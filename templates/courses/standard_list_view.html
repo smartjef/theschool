@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{%block title%} Course {% endblock title %}
+{% block content %}
+
+   <div class="container">
+      <div class="card">
+         <div class="d-flex m-4">
+            <a href="{% url 'index' %}">Home/</a>
+            <a href="{% url 'courses' %}">Course/</a>
+            <a href="." >{{object.slug}}</a>
+         </div>
+      </div>
+   </div>
+
+   <div class="container">
+      <div class="slides">
+         <div class="card">
+            <div class="con1">
+            {% for standard in standards %} 
+               <div class="thumbnail">
+                  <img src="{{standard.image.url}}" alt="...">
+                  <h3>{{standard.name}}</h3>
+                  <p>{{standard.description}}</p>
+                  <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-success">View</a>
+               </div>
+            {% endfor %}
+            </div>
+         </div>
+      </div>
+   </div>
+  
+{% endblock content %}

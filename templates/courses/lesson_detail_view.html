@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{%block title%} Lesson Detail {% endblock title %}
+
+{% block content %}
+<div class="container2">
+    <div class="video">
+            <span style="color: red; padding: 5px; background: rgba(255, 255, 255, 0.849);"><center><h1><b>Chapter-{{lessons.position}}: {{lessons.name}}</b></h1>
+            <a href="{% url 'index' %}">Home/</a>
+            <a href="{% url 'courses' %}">Course/</a>
+            <a href="." >{{object.slug}}</a>
+            <hr style="border: 3px solid rgb(199, 198, 198); background: rgb(255, 255, 255); width: 70%; align-items:center; opacity:1;">
+            <p style="color: gray;">{{lessons.description}}</p></center>
+            </span>
+            <div class="vid">
+                <div class="vid-color">
+                    <center><video src="{{lessons.video.url}}" autoplay loop muted></video></center>
+                </div>
+            </div>
+    </div>
+ </div>
+ {% if user.is_authenticated %}
+ <div class="container">
+        <div class="card mb-5">
+            <div>
+                <center style="color: rgb(190, 90, 22);"><h4><b>Lecture Details</b></h4></center>
+                <center><p class="small">--Created on <i>{{lessons.created_at}}</i> by <i>{{lessons.created_by}}</i></p></center>
+            </div>
+            <div class="con1 mt-4">
+                <center><video src="{{lessons.video.url}}" controls></video></center>
+            </div>
+            <div class="slides">
+                    <div class="thumbnail text-center p-3">
+                        <b>Download Presentations</b><br>
+                        Get presentations from the lecturer for free for this chapter <br>
+                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="thumbnail text-center p-3">
+                        <b>Download Notes</b> <br>
+                        Get notes from the lecturer for free for this chapter <br>
+                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="thumbnail text-center p-3">
+                        <b>Download Video</b> <br>
+                        Get video from the lecturer for free for this chapter <br>
+                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
+                    </div>
+            </div>
+            <div>
+                {{lessons.d_notes}}
+            </div>
+        </div> 
+        <h4>Practical Section For HTML,CSS,Javascript:</h4> 
+        <div class="card bg-dark mb-5">
+            <div class="container1 bg-dark mb-5 p-3">     
+                <div class="center1">
+                    <code><b>OUTPUT:</b></code> <br>
+                    <iframe id="output" class="form3" ></iframe>
+                </div>
+                <div class="code-input bg-dark p-2">
+                    <code>
+                        <label><b>HTML:</b></label>
+                        <textarea id="html-code" placeholder="Enter html code here" class="form2" cols="" rows="">{{lessons.code}}</textarea>
+                        <label><b>CSS:</b></label>
+                        <textarea id="css-code" class="form2" cols="" rows="" placeholder="Enter css code here"></textarea>
+                        <label><b>JS:</b></label>
+                        <textarea id="js-code" class="form2" cols="" rows="" placeholder="Enter javascript code here"></textarea>
+                    </code>
+                </div>
+            </div>
+        </div>
+            {%if user == lessons.created_by or user.is_superuser %}
+            <span class="text-center d-flex m-3 p-2"><a href="{% url 'lesson_update' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"> <button class="btn btn-success m-2">Update Lesson</button></a>
+            <a href="{% url 'lesson_delete' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"><button class="btn btn-danger m-2">Delete Lesson</button></a></span>
+            {% endif %}
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="co1">
+            <div class="card p-4">
+                <h3><b>Questions And Querries</b></h3>
+                <h5>Post your Comment or Question Below</h5>
+                <form action="" method="POST">
+                    <div class="form-group m-2">
+                        {% csrf_token %}
+                        {{form | crispy}}
+                        <input type="submit" class="btn btn-primary" name="form" value="Add Comment">
+                    </div>
+                </form>
+                <div class="card pl-5 pr-5 pt-3">
+                    {% for comment in lessons.comments.all %}
+                        <div class="d-flex">
+                            <div style="font-size: 35px; color: rgb(0, 98, 255);">
+                                <i class="fa fa-user-circle m-3 color-primary p-2" aria-hidden="true"></i>
+                            </div>
+                            <span class="d-block"><h4>{{comment.author}} <small><i>Posted on {{comment.date_added}}</i></small> </h4>
+                            <p>{{comment.body}}</p></span>
+                        </div>
+                        {% for reply in comment.replies.all %}
+                            <div class="d-flex pl-5 ml-3">
+                                <div style="font-size: 25px; color: rgba(255, 72, 0, 0.794);">
+                                    <i class="fa fa-user-circle m-3 color-primary p-2" aria-hidden="true"></i>
+                                </div>
+                                <span class="d-block"><h5>{{reply.author}} <small> <i>Posted on {{reply.date_added}}</i> </small> </h5>
+                                <p>{{reply.reply_body}}</p></span>
+                            </div>
+                        {%endfor%}
+                        <div class="form pl-5">
+                            <form method="post" class="form-group ml-5 mr-5">
+                                <input type="hidden" name="comment.id" value="{{comment.id}}">
+                                <input type="hidden" name="comment.comm_name" value="{{comment.comm_name}}">
+                                {% csrf_token %}
+                                {{form2 | crispy}}
+                                <input type="submit" name="form2" class="btn btn-warning" value="Add Reply">
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%else%}
+    <div class="container">
+        <div class="row">
+            <div class="card p-4 m3">
+                <span>To be able to join class, comment and reply <a href="{% url 'register' %}">register</a> or <a href="{% url 'user_login' %}">login</a></span>
+            </div>
+        </div>
+    </div>
+{%endif%}
+
+<script>
+    function run(){
+        let htmlCode = document.querySelector("#html-code").value;
+        let cssCode = "<style>" + document.querySelector("#css-code").value + "</style>";
+        let jsCode = document.querySelector("#js-code").value;
+        let output = document.querySelector("#output");
+        output.contentDocument.body.innerHTML = htmlCode+cssCode;
+        output.contentWindow.eval(jsCode);
+    }
+    document.querySelector("#html-code").addEventListener("keyup", run);
+    document.querySelector("#css-code").addEventListener("keyup", run);
+    document.querySelector("#js-code").addEventListener("keyup", run);
+</script>
+{% endblock content %}

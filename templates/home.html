@@ -1,0 +1,151 @@
+{% extends 'base.html'%}
+
+{% load static %}
+{%block title%}
+    Homepage
+{%endblock title%}
+
+{%block content%}
+    
+
+
+  <div class="slideshow-container">
+
+    <div class="mySlides fade">
+      <div class="numbertext">1</div>
+      <img src="{% static '/img/pexels-christina-morillo-1181467.jpg' %}"  style="width:100%">
+      <div class="text"> <h3>LEARN WITHOUT LIMITS</h3> <p>Build skills with courses, certificates and degrees online from TheProgrammer. Learn on your schedule
+        Study any topic, anytime. Explore thousands of courses </p>
+        {%if user.is_authenticated%}
+          <a href="{% url 'courses' %}" class="btn btn-success">Get Started</a>
+        {% else %}
+          <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a>
+        {%endif%}
+    </div>
+
+    </div>
+    
+    <div class="mySlides fade">
+      <div class="numbertext">2</div>
+      <img src="{% static '/img/images (1).jpeg' %}" style="width:100%">
+      <div class="text"> <h3>JOIN LECTURES</h3> <p>
+        Come teach with us, Instructors from around the world teach millions of students on <b>TheProgrammer</b>. We provide the tools and skills to teach what you love.  
+        </p>
+        {%if user.is_authenticated%}
+        <a href="{% url 'courses' %}" class="btn btn-success">Start Teaching Today</a>
+      {% else %}
+        <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a>
+      {%endif%}
+      </div>
+    </div>
+    
+    <div class="mySlides fade">
+      <div class="numbertext">3</div>
+      <img src="{% static '/img/pexels-myburgh-roux-1102797.jpg' %}" style="width:100%">
+      <div class="text"> <h3>EXPAND YOUR CAREER</h3> <p> Continuing education is critical in today's employment environment. You may want to return to school while holding down a job in order to obtain a graduate degree, a professional certification or to brush up on technical skills like a new software program. <b>@TheProgrammer is the best place for you</b> </p>
+        {%if user.is_authenticated%}
+        <a href="{% url 'courses' %}" class="btn btn-success">Expand Career</a>
+      {% else %}
+        <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a>
+      {%endif%}
+      </div>
+    </div>
+    
+    <div class="mySlides fade">
+      <div class="numbertext">4</div>
+      <img src="{% static '/img/pexels-pixabay-276452.jpg' %}" style="width:100%">
+      <div class="text"> <h3>IT & Software</h3> <p>Join others, Practical Ethical Hacking for Beginners
+        Learn practical skills for ethical hacking & penetration testing with this comprehensive course, no experience necessary </p>
+        {%if user.is_authenticated%}
+        <a href="{% url 'courses' %}" class="btn btn-success">IT and Software</a>
+      {% else %}
+        <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a>
+      {%endif%}
+      </div>
+    </div>
+    <div class="mySlides fade">
+      <div class="numbertext">5</div>
+      <img src="{% static '/img/pexels-thisisengineering-3861969.jpg' %}" style="width:100%">
+      <div class="text"> <h3>WEB DEVELOPMENT</h3> <p>Python and Django Full Stack Web Developer Bootcamp
+        Learn to build websites with HTML , CSS , Bootstrap , Javascript , jQuery , Python 3 , and Django! </p>
+        {%if user.is_authenticated%}
+        <a href="{% url 'courses' %}" class="btn btn-success">Web Development</a>
+      {% else %}
+        <a href="{% url 'register' %}" class="btn btn-primary">Join For Free</a>
+      {%endif%}
+      </div>
+    </div>
+
+   </div>
+    <br>
+    
+    <div style="text-align:center">
+      <span> <i class="dot"></i></span> 
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+    </div>
+    <div class="con1 bg-success m-0">
+      <div class="center1">
+        <h1 style="color: rgb(255, 255, 255);">The Programmer</h1>
+        <p style="color: rgb(255, 255, 255);">We host and track onine learning, providing a virtual hub where learners can access training resources. In addition to that we enhance the quality of learning and teaching, meetings the learning needs of the users</p>
+      </div>
+      <div class="left1">
+        <img src="{% static '/img/je.jpg' %}"  alt="...">
+      </div>
+    </div>
+    <div class="slides bg-primary">
+      <div class="thumbnail">
+          <img src="{% static '/img/images.jpeg' %}" alt="...">
+          <h3>Cyber Security</h3>
+          <p class="small text-center text-gray-900 mb-2">Cyber security is the application of technologies, processes and controls to protect systems, networks, programs, devices and data from cyber attacks. It aims to reduce the risk of cyber attacks and protect against the unauthorised exploitation of systems, networks and technologies.</p>
+      </div>
+      <div class="thumbnail">
+          <img src="{% static '/img/python.jpg' %}" alt="...">
+          <h3>Machine Learning</h3>
+          <p>Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.</p>
+      </div>
+      <div class="thumbnail">
+          <img src="{% static '/img/comp net.jpg' %}" alt="...">
+          <h3>Computer Networks</h3>
+          <p>A computer network is a group of computers linked to each other that enables the computer to communicate with another computer and share their resources, data, and applications. <br><a href="{% url 'courses'%}"><b>Explore More</b></a></p>
+      </div>
+      
+    </div>
+    <div class="con1 bg-gradient-primary m-0">
+        <div class="left1">
+          <img src="{% static '/img/jeff.jpg' %}"  alt="...">
+        </div>
+        <div class="center1">
+        <h1 style="color: white;">Jeff Odhiambo</h1>
+        <q style="text-align: center; color:white;">I was able to develope a fully operational system from scratch due to the skills i obtained from the programmer</q>
+      </div>
+    </div>
+
+
+    <script>
+        var slideIndex = 0;
+
+        showSlides();
+
+        function showSlides() {
+          var i;
+          var slides = document.getElementsByClassName("mySlides");
+          var dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}    
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";  
+          dots[slideIndex-1].className += " active";
+          setTimeout(showSlides, 6000); // Change image every 2 seconds
+        }
+
+        </script>
+        
+{%endblock content%}
