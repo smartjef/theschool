@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+
+{% load static %}
+{%block title%}
+    Programming Hub
+{%endblock title%}
+
+{%block content%}
+<div class="card d-flex mb-2 pl-3">
+    <h2 style="color: blue;">Code @<span style="color: red;">The</span>Programmer</h2>
+    <a href="#" class="btn btn-primary m-3">Copy the codes to their relevant places and test yourself</a>
+</div>
+    <pre>
+        HTML:
+        <code class="language-html">
+            Test the blinking and color changing effects @TheProgrammer
+        </code>
+    </pre>
+        <pre>
+            CSS:
+            <code class="css">
+            body{
+                font-size: 18px;
+                color: black;
+                margin: 5px;
+                background-color: red;
+                cursor: pointer;
+            }
+            body:hover{
+                color: rgba(255, 21, 0, 0.746);
+                font-size: 20px;
+                background-color: blue;
+                color: white;
+                font-weight: bold;
+                transform: rotate(180deg);
+                transition-duration: .3s;
+            }
+            </code>
+        </pre>
+        <pre>
+            JS:
+            <code class="js">
+                var a = 5
+                var b = 12
+                var c = a + b;
+                document.write(a+" + "+b+" = "+ c);
+                document.write("<br><br>"+"Welcome @TheProgrammer")
+            </code>
+        </pre>
+<div class="card bg-dark mb-5">
+    <div class="container1 bg-dark mb-5 p-3">     
+        <div class="center1">
+            <code><b>OUTPUT:</b></code> <br>
+            <iframe id="output" class="form3" ></iframe>
+        </div>
+        <div class="code-input bg-dark p-2">
+            <code>
+                <label><b>HTML:</b></label>
+                <textarea id="html-code" placeholder="Enter html code here" class="form2" cols="" rows="">{{lessons.code}}</textarea>
+                <label><b>CSS:</b></label>
+                <textarea id="css-code" class="form2" cols="" rows="" placeholder="Enter css code here"></textarea>
+                <label><b>JS:</b></label>
+                <textarea id="js-code" class="form2" cols="" rows="" placeholder="Enter javascript code here"></textarea>
+            </code>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}

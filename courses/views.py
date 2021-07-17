@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import LessonForm, CommentForm, ReplyForm
 from django.urls import reverse_lazy
+from django.contrib.auth.models import Permission, User
 from courses.models import Standard, Subject, Lesson
 from django.views.generic import TemplateView, DetailView, ListView,FormView, CreateView, UpdateView, DeleteView
 # Create your views here.
@@ -130,11 +131,13 @@ class LessonDeleteView(DeleteView):
         subject = self.object.subject
         return reverse_lazy('lesson_list', kwargs={'standard': standard.slug,'slug':subject.slug})
 
-class Search(ListView):
-    context_object_name = 'standards'
-    model = Standard
-    template_name = 'courses/standard_list_view.html'
-
-    def query(self):
-        q = self.request.GET.get('q')
-        return Standard.objects.filter(name__icontains=q)
+def search(request):
+    ans = request.GET['q']
+    q = Standard.objects.filter(name__icontains=ans) or Subject.objects.filter(name__icontains=ans) or Lesson.objects.filter(name__icontains=ans)
+    user = User.objects.filter(username__icontains=ans) or User.objects.filter(email__icontains=ans)
+    context = {
+        'ans': ans,
+        'q' : q,
+        'user' : user,
+    }
+    return render(request, 'search.html', context)

@@ -1,0 +1,134 @@
+{%extends 'base.html' %}
+{%load static%} 
+<link href="{% static '/css/style.css' %}" rel="stylesheet">
+<link href="{% static '/css/sb-admin-2.min.css' %}" rel="stylesheet">
+{%block title%}Account Settings{%endblock title%}
+
+{%block content%} 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
+<div class="row">
+    
+    <div class="left1 card p-3">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading subnav">
+                    <div class="panel-title">
+                        <h5 data-toggle="collapse" href="#collapse1"><i class="fa fa-angle-down mr-3 fa-sm fa-fw text-gray-500"></i>Sub Menu</h5>
+                    </div>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <p class="list-group subnav">
+                        <a href="{% url 'user_login'%}" ><i class="fab fa-facebook-messenger mr-3 fa-sm fa-fw text-gray-500"></i>Chart with support</a>
+                        <a href="{% url 'change-password'%}"><i class="fa fa-google-plus-circle mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Send feedback</a>
+                        <a href="#"><i class="fa fa-stack-exchange mr-3 text-gray-500"></i>Service status</a>
+                        <a href="{% url 'profile_update'%}"><i class="fa fa-money mr-3 fa-sm fa-fw text-gray-500"></i>Funding</a>
+                        <a href="{% url 'profile'%}"><i class="fa fa-money-bill mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>KCB services</a>
+                        <a href="#"><i class="fas fa-money-check mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>M-Pesa services</a>
+                        <a href="{% url 'hub'%}"><i class="fa fa-shopping-bag mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Purchase</a>
+                        <a href="{% url 'index'%}"> <i class="fa fa-truck-moving mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Return goods</a>        
+                    </p>
+                </div>
+            </div>
+        </div> 
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading subnav">
+                    <div class="panel-title">
+                        <h5 data-toggle="collapse" href="#collapse2"><i class="fa fa-angle-down mr-3 fa-sm fa-fw text-gray-500"></i>Site 2</h5>
+                    </div>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <p class="list-group subnav">
+                    <a href="https://sites.google.com/view/theprogrammerjeff/"> <i class="fa fa-university mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Home</a>
+                    <a href="https://sites.google.com/view/theprogrammerjeff/c-programming"><i class="fas fa-fw fa-code mr-3 fa-sm fa-fw text-gray-500"></i>C Programming</a>
+                    <a href="https://sites.google.com/view/theprogrammerjeff/history"><i class="fa fa-group mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Our Team</a>
+                    <a href="https://sites.google.com/view/theprogrammerjeff/faq"><i class="fa fa-hacker-news fa-sm fa-fw mr-3 text-gray-500"></i>FAQs</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading subnav">
+                    <div class="panel-title">
+                        <h5 data-toggle="collapse" href="#collapse3"><i class="fa fa-angle-down mr-3 fa-sm fa-fw text-gray-500"></i>Account Settings</h5>
+                    </div>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <p class="list-group subnav">
+                    <a href="{% url 'user_login'%}" ><i class="fas fa-fw fa-sign mr-3 fa-sm fa-fw text-gray-500"></i>Switch account</a>
+                    <a href="{% url 'change-password'%}"><i class="fa fa-key mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Change password</a>
+                    <a href="{% url 'forgot-password' %}"><i class="fa fa-lock fa-sm fa-fw mr-3 text-gray-500"></i>Reset password</a>
+                    <a href="{% url 'profile_update'%}"><i class="fa fa-edit mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>Edit Profile</a>
+                    <a href="{% url 'profile'%}"><i class="fa fa-user-circle mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>View Profile</a>
+                    <a href="{% url 'user_logout'%}"> <i class="fa fa-sign-out mr-3 fa-sm fa-fw text-gray-500" aria-hidden="true"></i>End session</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <center class="hide">
+            <h5><b>Total Expense</b><br></h5>
+            <b>Ksh. <span style="color: green;">15040.00</span>/50000.00</b>
+            <div id="pro">
+                <img src="{{user.user_profile.profile_Pic.url}}" alt="{{user.username}}">
+            </div>
+            <strong> <b> {{user.first_name}} {{user.last_name}} </b></strong>
+            <p>{{ user.profile.bio}}</p>
+    
+            <h5><b>Plan: </b><span style="color: green;"><strong> Premium</strong></span></h5>
+          <br>
+            </center>
+    </div>
+    <div class="center1 card p-3">
+        <div class="act-top">
+            <div><h2 style="color: green;">Account settings</h2></div>
+            <a href="{% url 'profile'%}"><div class="bt"> Profile</div></a>
+        </div>
+            
+            <div class="profile">
+                <div id="i"><i class="fa fa-angle-down mr-4"></i>
+                <h2>User Profile</h2></div>
+                <div class="user-profile">
+                    <div class="co1-1g-3 m-2">
+                        <img src="{{user.user_profile.profile_Pic.url}}" alt="{{user.username}}" height="100px">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h4 text-gray-900">Upload your photo</h3>
+                        <p class="h6 text-gray-800">The photo should be atleast 300px by 300px</p>
+                       <span><button id="l2" type="upload" >Upload a aphoto</button> <button id="l2" disabled="disabled">Take a photo</button></span>
+                    </div>
+                </div>
+                <br>
+                <h2>Additional Information</h2>
+               
+                <div class="user-profil">
+                    <span><label for="first_name">First name:</label><br>
+                    <input type="text" class="form-control" name="" value="{{user.first_name}}"></span>
+                    <span><label for="last_name">Last name:</label><br>
+                    <input type="text" name="" class="form-control form-control-user" value="{{user.last_name}}"></span>
+                </div>
+                <div class="user-profil">
+                    <span><label for="username">Username:</label><br>
+                    <input type="text" class="form-control form-control-user" name="" value="{{user.username}}"></span>
+                    <span><label for="email">Email:</label><br>
+                    <input type="text" name="" class="form-control form-control-user" value="{{user.email}}"></span>
+                </div>
+                <div class="user-profil">
+                    <span><label for="username">User Type:</label><br>
+                    <input type="text" name="" class="form-control form-control-user" value="{{user.user_profile.user_type}}"></span>
+                    <span><label for="bio">Bio:</label><br>
+                    <textarea name="" class="form-control form-control-user mb-3" cols="" rows="auto">{{ user.user_profile.bio}} </textarea></span>
+                </div>
+                <a href="{% url 'profile_update'%}"><button class="btn btn-success">Update Profile</button></a>
+            </div>
+          
+    </div>
+</div>
+{%endblock content%}

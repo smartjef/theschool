@@ -8,18 +8,44 @@
 {%block content%}
 
 <div class="container">
-    <div class="slides">
-    {% for standard in standards %} 
-       <div class="col">
-          <span>
-          <img src="{{standard.image.url}}" height="200px" alt="...">
-          <h1>{{standard.name}}</h1>
-          <p>{{standard.description}}</p>
-          <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-success">View</a>
-          </span>
-       </div>
-    {% endfor %}
-    </div>
+      {%if q or user %}
+         <center><h5 class="bg-success p-3">
+            Showing results for {{ans}}, Find more related results <a href="https://www.google.com/search?q={{ans}}" class="bg-info">here</a>
+         </h5></center>
+         <div class="row p-4">
+            {% for lesson in q %}
+            <div class="card p-0 mb-2">
+               <div class="course d-flex mt-0 p-2">
+                  <img src="{{lesson.image.url}}" alt="..."> 
+                  <span class="d-block ml-5">
+                     <a href="">Class: {{lesson.name}}</a>
+                     <p class="small">{{lesson.description}}</p>
+                  </span>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+         {%for user in user%}
+            <div class="card p-3 mb-2">
+            <div class="course d-flex mt-0 p-2">
+               <span class="d-block">
+               <img src="{{user.user_profile.profile_Pic.url}}" alt="{{user.username}}"> <br>
+               Username: {{user.username}}</span>
+               <span class="d-block">
+               <h5>Name: {{user.first_name}} {{user.last_name}} </h5>
+               Email: {{user.email}} <br>
+               Bio: {{user.user_profile.bio}}
+               </span>
+            </div>
+            </div>
+            {%endfor%}
+     {%else%}
+     <div class="card">
+         <center> <h5 class="bg-danger p-3">
+            Result for {{ans}} not found but can find related results <a href="https://www.google.com/search?q={{ans}}" class="bg-light">here</a>
+         </h5></center>
+      </div>
+      {%endif%}
  </div>
 
 {%endblock content%}

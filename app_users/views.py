@@ -5,6 +5,10 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from app_users.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.views.generic import CreateView,TemplateView
 # Create your views here.
 def index(request):
     return render(request, 'home.html')
@@ -65,3 +69,43 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def hub(request):
+    return render(request, 'hub.html')
+
+def forgot_password(request):
+   return render(request, 'app_users/forgot-password.html')
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+   template_name = 'app_users/profile.html'
+   
+
+class ProfileUpdateView(LoginRequiredMixin, TemplateView):
+   user_form = UserForm
+   profile_form = UserProfileInfoForm
+   template_name = 'app_users/profile-update.html'
+
+   def post(self, request):
+      post_data = request.POST or None
+      file_data = request.FILES or None
+
+      user_form = UserForm(post_data, instance=request.user)
+      profile_form = UserProfileInfoForm(post_data, file_data, instance=request.user.user_profile)
+      if user_form.is_valid() and profile_form.is_valid():
+         user_form.save()
+         profile_form.save()
+         messages.success(request, 'Your Profile was successfully updated! ')
+         return HttpResponseRedirect(reverse_lazy('profile'))
+      context = self.get_context_data(
+         user_form = user_form,
+         profile_form = profile_form
+      )
+      return self.render_to_response(context)
+
+   def get(self, request, *args, **kwargs):
+      return self.post(request, *args, **kwargs)
+         
+def settings(request):
+   messages.success(request, 'Welcome to your settings section')
+   return render(request, 'app_users/settings.html')
+
