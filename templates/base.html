@@ -285,7 +285,7 @@
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search" action="search" method="get">
+                                <form class="form-inline mr-auto w-100 navbar-search" action="{%url 'search' %}" method="get">
                                     {% csrf_token %}
                                     <div class="input-group">
                                         <input type="search" name="q" class="form-control bg-light border-0 small"
