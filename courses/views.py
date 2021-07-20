@@ -3,28 +3,25 @@ from django.http import HttpResponseRedirect
 from .forms import LessonForm, CommentForm, ReplyForm
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Permission, User
-from courses.models import Standard, Subject, Lesson
 from django.views.generic import TemplateView, DetailView, ListView,FormView, CreateView, UpdateView, DeleteView
+from .models import Standard, Subject, Lesson, Comment, WorkingDays, TimeSlots
 # Create your views here.
+from django.db.models import Q
+
+
 
 class StandardListView(ListView):
     context_object_name = 'standards'
     model = Standard
     template_name = 'courses/standard_list_view.html'
 
-
 class SubjectListView(DetailView):
-    def get_context_data(self, **kwargs):
-        context =super().get_context_data(**kwargs)
-        print(context.get("object"))
-        # context[""]
-        return context
-        
     context_object_name = 'standards'
+    extra_context = {
+        'slots': TimeSlots.objects.all() or WorkingDays.objects.all()
+    }
     model = Standard
     template_name = 'courses/subject_list_view.html'
-
-
 class LessonListView(DetailView):
     context_object_name = 'subjects'
     model = Subject
@@ -96,26 +93,28 @@ class LessonDetailView(DetailView, FormView):
         return HttpResponseRedirect(self.get_success_url())
 
 class LessonCreateView(CreateView):
+    # fields = ('lesson_id','name','position','image','video','ppt','Notes')
     form_class = LessonForm
     context_object_name = 'subject'
-    model = Subject
+    model= Subject
     template_name = 'courses/lesson_create.html'
+
     def get_success_url(self):
         self.object = self.get_object()
         standard = self.object.standard
-        return reverse_lazy('lesson_list', kwargs={'standard': standard.slug,'slug':self.object.slug})
+        return reverse_lazy('lesson_list',kwargs={'standard':standard.slug, 'slug':self.object.slug})
+
 
     def form_valid(self, form, *args, **kwargs):
         self.object = self.get_object()
-        fm =form.save(commit=False)
+        fm = form.save(commit=False)
         fm.created_by = self.request.user
-        fm.Standard = self.object.standard
+        fm.standard = self.object.standard
         fm.subject = self.object
         fm.save()
         return HttpResponseRedirect(self.get_success_url())
-
 class LessonUpdateView(UpdateView):
-    fields = ('name','position','video','ppt','Notes')
+    fields = ('name','position','description','d_notes','code','image','video','ppt','Notes')
     model = Lesson
     template_name = 'courses/lesson_update.html'
     context_object_name = 'lessons'
@@ -138,6 +137,6 @@ def search(request):
     context = {
         'ans': ans,
         'q' : q,
-        'user' : user,
+        'search_user' : user,
     }
     return render(request, 'search.html', context)

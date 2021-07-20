@@ -72,6 +72,13 @@
                                                     Me</label>
                                             </div>
                                         </div>
+                                        {% if messages %}
+                                        {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}" role="alert">
+                                            {{message}}
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
                                         <hr>
                                         <a href="#" class="btn btn-google btn-user btn-block">

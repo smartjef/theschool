@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
+import os
 # Create your models here.
 
 import os
@@ -110,4 +112,26 @@ class Reply(models.Model):
     def __str__(self):
         return "reply to " + str(self.comment_name.comm_name)
 
+class WorkingDays(models.Model):
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE,related_name='standard_days')
+    day = models.CharField(max_length=100)
+    def __str__(self):
+        return self.day
+
+class TimeSlots(models.Model):
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE,related_name='standard_time_slots')
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return str(self.start_time) + ' - ' + str(self.end_time) 
+
+class SlotSubject(models.Model):
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE,related_name='standard_slots')
+    day = models.ForeignKey(WorkingDays, on_delete=models.CASCADE,related_name='standard_slots_days')
+    slot = models.ForeignKey(TimeSlots, on_delete=models.CASCADE,related_name='standard_slots_time')
+    slot_subject = models.ForeignKey(Subject, on_delete=models.CASCADE,related_name='standard_slots_subject')
+
+    def __str__(self):
+        return str(self.standard)+ ' - ' + str(self.day) + ' - ' + str(self.slot) + ' - ' + str(self.slot_subject)
 

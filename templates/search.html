@@ -8,7 +8,7 @@
 {%block content%}
 
 <div class="container">
-      {%if q or user %}
+      {%if q or search_user %}
          <center><h5 class="bg-success p-3">
             Showing results for {{ans}}, Find more related results <a href="https://www.google.com/search?q={{ans}}" class="bg-info">here</a>
          </h5></center>
@@ -25,7 +25,7 @@
             </div>
             {% endfor %}
          </div>
-         {%for user in user%}
+         {%for user in search_user%}
             <div class="card p-3 mb-2">
             <div class="course d-flex mt-0 p-2">
                <span class="d-block">

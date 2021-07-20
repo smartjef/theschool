@@ -5,8 +5,8 @@ class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
         #fields = ('__all__')
-        fields = ('lesson_id', 'name', 'position', 'video', 'ppt', 'Notes')
-
+        fields = ('lesson_id', 'name', 'position','description','d_notes','code','image', 'video', 'ppt', 'Notes')
+        #exclude = ('subject', 'created_by', 'created_at')
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

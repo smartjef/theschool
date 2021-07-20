@@ -13,33 +13,25 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
         <h1 class="h3 mb-0 text-gray-800">Profile</h1>
     </div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{message}}
-                </div>
-            {% endfor %}
-        {% endif %}
-        <div class="row">
-            <div class="left"></div>
-            <div class="card o-hidden border border-0 shadow-1g my-5 co1-1g-5 ml-6">
-                <div class="slides m-4">
+            <div class="col card box-shadow-hover o-hidden border border-0 shadow-1g my-5 co1-1g-5 ml-6">
+                <div class="con1 m-4">
                     <img src="{{user.user_profile.profile_Pic.url}}" class="col" alt="{{user.username}}">
-                    <span class="col ml-4">
-                    <h5>{{user.first_name}} {{user.last_name}}</h5>
-                    <p>
-                    <table class="form-action">
+                    <span class="display-10  m-3">
+                    <h4 style="color:#ff5722;"><b>{{user.first_name}} {{user.last_name}}</b></h4>
+                    <table>
                     <tr><td><strong>Username:</strong></td> <td>{{user.username}}</td></tr>
                     <tr><td><strong>Email:</strong> </td> <td>{{user.email}}</td></tr>
                     <tr><td><strong>User-type:</strong> </td> <td>{{ user.user_profile.user_type}}</td></tr>
                     <tr><td><strong>Bio:</strong> </td> <td>{{ user.user_profile.bio}}</td></tr>
-                    </table></p>
-                    <a class="btn btn-success btn-block" href="{% url 'index'%}">Back</a><br>
+                    </table>
                     <a href="{% url 'profile_update'%}"><button class="btn btn-success btn-block">Update</button></a>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="{% url 'index'%}">Back</a>
+                    </div>
                     </span>
-                </div>    
+                </div>   
             </div>
-        </div>
 
 </div>
 

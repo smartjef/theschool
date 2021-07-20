@@ -1,4 +1,5 @@
 {%load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,7 +89,7 @@
                         <a class="collapse-item" href="{% url 'index' %}">Home</a>
                         <a class="collapse-item" href="{% url 'index' %}">About</a>
                         <a class="collapse-item" href="{% url 'index' %}">Services</a>
-                        <a class="collapse-item" href="{% url 'index' %}">Contact</a>
+                        <a class="collapse-item" href="{% url 'contact' %}">Contact</a>
                         <a class="collapse-item" href="{% url 'courses' %}">Courses</a>
                         <a class="collapse-item" href="">Blogs</a>
                     </div>
@@ -145,7 +146,7 @@
                         <a class="collapse-item" href="{% url 'change-password' %}">Change Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Contact us:</h6>
-                        <a class="collapse-item" href="#contact">Contact</a>
+                        <a class="collapse-item" href="{% url 'contact' %}">Contact</a>
                         <a class="collapse-item" href="#subscribe">Subscribe</a>
                         
                     </div>
@@ -192,7 +193,6 @@
                     <!-- Topbar Search -->
                     <form action="{% url 'search' %}" method="get"
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        {% csrf_token %}
                         <div class="input-group">
                             <input type="search" class="form-control bg-light border-0 small" name="q" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
@@ -215,43 +215,44 @@
 
                 <!-- Nav Item - User Information -->
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Home</span>
-                    
-                    </a>
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--glow-in"
-                        aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="{% url 'index'%}">
-                            <i class="fas fa-school fa-sm fa-fw mr-2 ml-0 text-gray-400"></i>
-                            TheProgrammer
-                            <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Home</span>
+                        
                         </a>
-                        <a class="dropdown-item" href="#about">
-                            <i class="fas fa-group fa-sm fa-fw mr-2 text-gray-400"></i>
-                            About Us
-                            <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
-                        </a>
-                        <a class="dropdown-item" href="#location">
-                            <i class="fa fa-location-arrow fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Location
-                            <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
-                        </a>
-                        <a class="dropdown-item" href="#contact">
-                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Contact for services
-                            <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'index' %}">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Explore More 
-                            <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
-                        </a>
-                    </div>
-                </li></ul>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--glow-in"
+                            aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url 'index'%}">
+                                <i class="fas fa-school fa-sm fa-fw mr-2 ml-0 text-gray-400"></i>
+                                TheProgrammer
+                                <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                            </a>
+                            <a class="dropdown-item" href="#about">
+                                <i class="fas fa-group fa-sm fa-fw mr-2 text-gray-400"></i>
+                                About Us
+                                <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                            </a>
+                            <a class="dropdown-item" href="#location">
+                                <i class="fa fa-location-arrow fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Location
+                                <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                            </a>
+                            <a class="dropdown-item" href="{% url 'contact' %}">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Contact
+                                <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'index' %}">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Explore More 
+                                <i class="fa fa-angle-double-right ml-2 text-gray-500"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
 
                
 
@@ -381,13 +382,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
-                                    {%if user.user_profile.profile_Pic == False %}
-                                    <img class="img-profile rounded-circle"
-                                    src="{% static 'img/undraw_profile.svg' %}">
-                        
-                                    {%else%}
-                                    <img  class="img-profile rounded-circle" src="{{user.user_profile.profile_Pic.url}}">
-                                    {%endif%}
+                                        <img  class="img-profile rounded-circle" src="{{user.user_profile.profile_Pic.url}}">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -412,7 +407,7 @@
                                 </div>
                             </li>
                         {%else%}
-        
+                            
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -429,7 +424,7 @@
                                     </a>
                                     <a class="dropdown-item" href="{% url 'register'%}">
                                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        <button class="small btn btn-primary mr-2">Join For Free</button>
+                                        Join For Free
                                     </a>
                                 </div>
                             </li>
@@ -438,11 +433,11 @@
 
                 </nav>
                 <!-- End of Topbar -->
+                <div class="container p-3">
                 {%block content%}
-                    <div class="alert alert-success m-2" id="msg" role="alert">
-                        alert
-                    </div>
+                    
                 {% endblock content%}
+                </div>
             </div>
             <!-- End of Main Content -->
 
@@ -457,91 +452,51 @@
                             <a href="{% url 'index' %}">Leadership</a> <br>
                             <a href="#">Careers</a> <br>
                             <a href="#">Catalog</a> <br>                           
-                            
-                        </div>
-                        <div class="col">
-                            <h5><b>Community</b></h5>
-                            <a href="#">Learners</a><br>
-                            <a href="#">Partners</a> <br>
-                            <a href="{% url 'index' %}">Developers</a> <br>
-                            <a href="{% url 'index' %}">Teaching Center</a> <br>    
-                            <a href="{% url 'courses' %}">Courses </a> <br>    
-                        </div>
-                        <div class="col">
-                            <h5><b>More</b></h5>
-                            <a href="#">Investers</a> <br>
                             <a href="#">Terms</a> <br>
                             <a href="{% url 'index' %}">Privacy</a> <br>
                             <a href="#">Help</a> <br>
-                            <a href="#contact">Contact</a> <br>
                         </div>
-                    <div>
-                        
-                </div>
-            </div>
-       	    <div class="container">
-                <div class="row">
-                    <div class="slides">
-                        <div class="col" id="contact">
-                            <h5><b>Contact us:</b> </h5>
-                            <form action="" method="post" class="form-group">
-                                {% csrf_token %}
-                            <input type="text" id="name"  class="form-control form-control-user" value="{{user.username}}" name="name" placeholder="Enter Name" required>
-                            <input type="email" id="email"  class="form-control form-control-user" value="{{user.email}}" placeholder="Enter Email" required>
-                            <textarea name="message" id="message"  class="form-control form-control-user" cols="" rows=""placeholder="Type message" required=""></textarea>
-                            <input type="submit" class="btn btn-primary m-2" value="send message">
-                            </form>
-                            <form action="" method="post"
-                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Email Address"
-                                    aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append" id="subscribe">
-                                    <button class="btn btn-primary" type="submit"><b>Subscribe</b>
-                                    </button>
-                                </div>
-                            </div>
-                            </form>                               
-                      
-                            <h5><b>Contact developer</b></h5>
-                                <center class="d-flex"><a href="https://www.facebook.com/jeff9924"> <div class="fa1"> <i class="fa fa-facebook-square"> </i></div> </a>
+                        <div class="col">
+                            <h5><b>Community:</b></h5>
+                            <a href="#">Investers</a> <br>
+                            <a href="#">Learners</a><br>
+                            <a href="#">Partners</a> <br>
+                            <a href="{% url 'index' %}">Teaching Center</a> <br>    
+                            <a href="{% url 'courses' %}">Courses </a> <br> 
+                            <h5 id="support"><b>Support Us:</b></h5>
+                            <a href="tel:*334#">M-Pesa</a> <br>
+                            <a href="https://www.paypal.com/myaccount/">Paypal</a>                              
+                        </div>
+                       
+                        <div class="col">
+                            <h5><b>Contact Information:</b></h5>
+                            <a href="{% url 'contact' %}" class="text-primary">Send feedback</a><br>
+                            <a href="{% url 'contact' %}" class="text-primary">Subscribe</a><br>
+                            <a href="{% url 'index' %}">Developers</a> <br>
+                            <a href="">Share</a> <br>
+                            <a href="{% url 'contact' %}">Contact</a> <br>
+                            <a href="https://goo.gl/maps/AQRexx1Q3HtVAzTL7">Location</a>
+                            <a href="tel:+254-795-067776">+254-795-067-776</a> <br> <a href="https://mail.google.com/">jeff@gmail.com</a> <br>
+
+                        </div>
+                        <div class="col">
+                            <h5><b>Contact developer:</b></h5>
+                                <span class="d-flex align-items-center"><a href="https://www.facebook.com/jeff9924"> <div class="fa1"> <i class="fa fa-facebook-square"> </i></div> </a>
                                     <a href="https://twitter.com/Jeff18309725"> <div class="fa1"><i class="fa fa-twitter-square"></i></div></a>
                                     <a href="https://api.whatsapp.com/send?phone=254795067776&fbclid=IwAR1E8QLFIIoKtkwbgYjGbBDos_vv9GtHh-tP1EJwmlz4jErucmErm1zcJLo"><div class="fa1"> <i class="fa fa-whatsapp" ></i> </div></a>
                                     <a href="https://t.me/joinchat/h_vup_oxm_BlMTE0"><div class="fa1"><i class="fa fa-telegram" aria-hidden="true"></i> </div></a>
                                     <a href="https://www.youtube.com/channel/UCnc5ci7h2Z2s7xLnHEBEFyw"><div class="fa1"><i class="fa fa-youtube-play" aria-hidden="true"></i> </div></a>
                                     <a href="https://www.instagram.com/jeff____joab/"><div class="fa1"><i class="fa fa-instagram" aria-hidden="true"></i></div></a>
                                     <a href="https://www.linkedin.com/in/jeff-odhiambo-3481921bb/"><div class="fa1"><i class="fa fa-linkedin-square" aria-hidden="true"></i></div></a>
-                                </center>
-                        </div>
-                        <div class="col">
-                            
-                                <h5><b>Contact Information</b></h5>
-                                Contact us through the details provided below: <br><a href="tel:+254-795-067776"> <i class="fa fa-phone mr-4"></i>+254-795-067-776</a> <br> <a href="https://mail.google.com/"><i class="fas fa-mail-bulk mr-4"></i>jeff@gmail.com</a>
-                                <br><a href="https://goo.gl/maps/AQRexx1Q3HtVAzTL7"> <i class="fa fa-map mr-4" aria-hidden="true"></i>Karibu Homes River View </a>
-                            
-                            
-                                <h5 id="support"><b>Support Us</b></h5>
-                                <p>You might support the developers through contribution; <br>
-                                <span>M-Pesa: <a href="tel:*334#"> <i class="fa fa-money mr-2"></i>Mobile</a></span> <br>
-                                <span>PayPal: <a href="https://www.paypal.com/myaccount/"> <i class="fa fa-paypal mr-2"></i>TheProgrammer</a></span>                            
-                        </div>
-                        <div class="col" id="location">
-                            
-                                <h5 id="about"><b>About Us</b></h5>
-                                <p>We offer IT based courses encouraging the utilization of IT online<br><a href=".#">Terms And Conditions</a></p>
-
-                                <h5> <b>LOCATION </b></h5>
+                                </span>
+                                <h5> <b>LOCATION: </b></h5>
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5667699209766!2d36.99413621363443!3d-1.4351476989533365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f7501259a4fb9%3A0x6c206e50fad9a752!2sKaribu%20Homes%20Riverview!5e0!3m2!1sen!2ske!4v1617231611359!5m2!1sen!2ske" width="" height="" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                            
-                            </div>
+                        
                         </div>
-            
-                    </div>
-                    
+                    <div>
+                        
                 </div>
             </div>
-                  
         </div>
         <!-- End of Footer -->
 

@@ -1,148 +1,176 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
-{%block title%} Lesson Detail {% endblock title %}
+{% load static %}
+{%block title%} {{lessons.name}} Detail {% endblock title %}
 
 {% block content %}
-<div class="container2">
-    <div class="video">
-            <span style="color: red; padding: 5px; background: rgba(255, 255, 255, 0.849);"><center><h1><b>Chapter-{{lessons.position}}: {{lessons.name}}</b></h1>
-            <a href="{% url 'index' %}">Home/</a>
-            <a href="{% url 'courses' %}">Course/</a>
-            <a href="." >{{object.slug}}</a>
-            <hr style="border: 3px solid rgb(199, 198, 198); background: rgb(255, 255, 255); width: 70%; align-items:center; opacity:1;">
-            <p style="color: gray;">{{lessons.description}}</p></center>
-            </span>
-            <div class="vid">
-                <div class="vid-color">
-                    <center><video src="{{lessons.video.url}}" autoplay loop muted></video></center>
-                </div>
-            </div>
-    </div>
- </div>
- {% if user.is_authenticated %}
- <div class="container">
-        <div class="card mb-5">
-            <div>
-                <center style="color: rgb(190, 90, 22);"><h4><b>Lecture Details</b></h4></center>
-                <center><p class="small">--Created on <i>{{lessons.created_at}}</i> by <i>{{lessons.created_by}}</i></p></center>
-            </div>
-            <div class="con1 mt-4">
-                <center><video src="{{lessons.video.url}}" controls></video></center>
-            </div>
-            <div class="slides">
-                    <div class="thumbnail text-center p-3">
-                        <b>Download Presentations</b><br>
-                        Get presentations from the lecturer for free for this chapter <br>
-                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="thumbnail text-center p-3">
-                        <b>Download Notes</b> <br>
-                        Get notes from the lecturer for free for this chapter <br>
-                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="thumbnail text-center p-3">
-                        <b>Download Video</b> <br>
-                        Get video from the lecturer for free for this chapter <br>
-                        <button class="btn btn-primary m-2">Get Files <i class="fa fa-download" aria-hidden="true"></i></button>
-                    </div>
-            </div>
-            <div>
-                {{lessons.d_notes}}
-            </div>
-        </div> 
-        <h4>Practical Section For HTML,CSS,Javascript:</h4> 
-        <div class="card bg-dark mb-5">
-            <div class="container1 bg-dark mb-5 p-3">     
-                <div class="center1">
-                    <code><b>OUTPUT:</b></code> <br>
-                    <iframe id="output" class="form3" ></iframe>
-                </div>
-                <div class="code-input bg-dark p-2">
-                    <code>
-                        <label><b>HTML:</b></label>
-                        <textarea id="html-code" placeholder="Enter html code here" class="form2" cols="" rows="">{{lessons.code}}</textarea>
-                        <label><b>CSS:</b></label>
-                        <textarea id="css-code" class="form2" cols="" rows="" placeholder="Enter css code here"></textarea>
-                        <label><b>JS:</b></label>
-                        <textarea id="js-code" class="form2" cols="" rows="" placeholder="Enter javascript code here"></textarea>
-                    </code>
-                </div>
-            </div>
-        </div>
-            {%if user == lessons.created_by or user.is_superuser %}
-            <span class="text-center d-flex m-3 p-2"><a href="{% url 'lesson_update' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"> <button class="btn btn-success m-2">Update Lesson</button></a>
-            <a href="{% url 'lesson_delete' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"><button class="btn btn-danger m-2">Delete Lesson</button></a></span>
-            {% endif %}
 
-</div>
-<div class="container">
-    <div class="row">
-        <div class="co1">
-            <div class="card p-4">
-                <h3><b>Questions And Querries</b></h3>
-                <h5>Post your Comment or Question Below</h5>
-                <form action="" method="POST">
-                    <div class="form-group m-2">
+        <header class="info-header">
+            <div id="page-intro1" class="container-fluid d-flex align-items-center justify-content-center ">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-md-10 text-white">
+                <!-- heading -->
+                <h2 class="display-5 font-weight-bold  p-5 " style="color:#ff5722;" >Chapter-{{lessons.position}}: {{lessons.name}}</h2>
+                <div class="row d-flex justify-content-center text-center">
+                    <ul class="breadcrumb text-primary">
+                        <li><a href="{% url 'index' %}"><b>Home /</b></a></li>
+                        <li><a href="{% url 'courses' %}"><b>Courses /</b></a></li>
+                        <li class="disabled-text" >{{lessons.name}}</li>
+                    </ul>
+                </div>
+        
+                <!-- divider -->
+                <hr style="color:#ff5722;">
+        
+                <!-- description -->
+                <h5 class="white-text my-4">{{lessons.description}}</h5>
+            </div>
+        </header>
+        
+        
+        <section class="text-center">
+            <h2 class="mb-0 mt-5 font-weight-bold mb-4" style="color:#ff5722;">Lecture Details</h2>
+            <div class="row d-flex justify-content-center mb-3">
+                <blockquote class="blockquote mt-0">
+                <footer class="blockquote-footer">Created on {{lessons.created_at}} by <cite title="Source Title">{{lessons.created_by}}</cite></footer>
+                </blockquote>
+            </div>
+            <!-- video -->
+            <div class="row d-flex justify-content-center mb-3 p-2">
+                <div id="player-overlay m-4">
+                        <video src="{{lessons.video.url}}" type="video/mp4" controls></video>
+                </div>
+            </div>
+            <!-- download cards -->
+            <div class="row d-flex justify-content-center mb-3 mt-3">
+                <!-- download presentations -->
+                        <div class="col-md-4 mb-4 mt-4">
+                            <div class="card box-shadow-hover">
+                            <div class="card-body">
+                                <h5 class="card-title">Download Presentations</h5>
+                                {% if lessons.ppt %}
+                                <p class="card-text">Download presentations from the lecture</p>
+                                <a href="{{lessons.ppt.url}}" download>
+                                <button type="button" class="button-les"><span>Get Files <i class="fa fa-download" aria-hidden="true"></i></span></button>
+                                <button type="button" class="button-les"><span>Share <i class="fa fa-share-square" aria-hidden="true"></i></span></button>
+                                </a>
+                                {% else %}
+                                <p class="card-text" > No PPT available</p>
+                                {% endif %}
+        
+                            </div>
+                            </div>
+                        </div>
+                <!-- download notes -->
+                        <div class="col-md-4 mb-4 mt-4">
+                            <div class="card box-shadow-hover">
+                            <div class="card-body">
+                                <h5 class="card-title">Download Notes</h5>
+                                {% if lessons.Notes %}
+                                <p class="card-text">Download notes from the lecture</p>
+                                <a href="{{lessons.Notes.url}}" download>
+                                <button type="button" class="button-les"><span>Get Files <i class="fa fa-download" aria-hidden="true"></i></span></button>
+                                <button type="button" class="button-les"><span>Share <i class="fa fa-share-square" aria-hidden="true"></i></span></button>
+                                </a>
+                                {% else %}
+                                <p class="card-text">Notes not available</p>
+                                {%endif%}
+        
+                            </div>
+                            </div>
+                        </div>
+                <!-- download video -->
+                        <div class="col-md-4 mb-4 mt-4">
+                            <div class="card box-shadow-hover">
+                            <div class="card-body">
+                                <h5 class="card-title">Download Video</h5>
+                                <p class="card-text">Download Video from the lecture</p>
+                                <a href="{{lessons.video.url}}" download>
+                                <button type="button" class="button-les"><span>Get Files <i class="fa fa-download" aria-hidden="true"></i></span></button>
+                                <button type="button" class="button-les"><span>Share <i class="fa fa-share-square" aria-hidden="true"></i></span></button>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+            </div>
+            <!-- update and delete button -->
+            <div class="row d-flex justify-content-center mb-3 mt-3">
+                {%if user == lessons.created_by or user.is_superuser %}
+                    <span class="text-center d-flex m-3 p-2"><a href="{% url 'lesson_update' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"> <button class="btn btn-success m-2">Update Lesson</button></a>
+                    <a href="{% url 'lesson_delete' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug%}"><button class="btn btn-danger m-2">Delete Lesson</button></a></span>
+                {% endif %}
+            </div>
+        </section>
+        <pre>
+            <code>
+                <div class="css">
+                    {{lessons.code}}
+                </div>
+            </code>
+        </pre>
+        {{lessons.d_notes}}
+        <hr class="my-5" style="color:#ff5722;">
+        
+        <!-- Comments section -->
+        <section >
+            <h2 class="mb-4 mt-5 font-weight-bold" style="color:#ff5722;">Questions And Queries</h2>
+            <h4 class="mt-2 font-weight-bold" style="color:#ff5722;">Post your comment or question below:</h4>
+            <br><br>
+            <div class="container row">
+                <div class="col-md-6">
+                    <form method="post">
+                        <div class="form-group">
                         {% csrf_token %}
-                        {{form | crispy}}
-                        <input type="submit" class="btn btn-primary" name="form" value="Add Comment">
-                    </div>
-                </form>
-                <div class="card pl-5 pr-5 pt-3">
-                    {% for comment in lessons.comments.all %}
-                        <div class="d-flex">
-                            <div style="font-size: 35px; color: rgb(0, 98, 255);">
-                                <i class="fa fa-user-circle m-3 color-primary p-2" aria-hidden="true"></i>
-                            </div>
-                            <span class="d-block"><h4>{{comment.author}} <small><i>Posted on {{comment.date_added}}</i></small> </h4>
-                            <p>{{comment.body}}</p></span>
+                        {{form|crispy}}
+                        <input type="submit" name="form" value="Add Comment" class="btn btn-primary btn-sm">
                         </div>
-                        {% for reply in comment.replies.all %}
-                            <div class="d-flex pl-5 ml-3">
-                                <div style="font-size: 25px; color: rgba(255, 72, 0, 0.794);">
-                                    <i class="fa fa-user-circle m-3 color-primary p-2" aria-hidden="true"></i>
-                                </div>
-                                <span class="d-block"><h5>{{reply.author}} <small> <i>Posted on {{reply.date_added}}</i> </small> </h5>
-                                <p>{{reply.reply_body}}</p></span>
-                            </div>
-                        {%endfor%}
-                        <div class="form pl-5">
-                            <form method="post" class="form-group ml-5 mr-5">
-                                <input type="hidden" name="comment.id" value="{{comment.id}}">
-                                <input type="hidden" name="comment.comm_name" value="{{comment.comm_name}}">
-                                {% csrf_token %}
-                                {{form2 | crispy}}
-                                <input type="submit" name="form2" class="btn btn-warning" value="Add Reply">
-                            </form>
-                        </div>
-                    {% endfor %}
+                    </form>
+        
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-{%else%}
-    <div class="container">
-        <div class="row">
-            <div class="card p-4 m3">
-                <span>To be able to join class, comment and reply <a href="{% url 'register' %}">register</a> or <a href="{% url 'user_login' %}">login</a></span>
+            <div class="row">
+                {% for comment in lessons.comments.all %}
+                <div class="col-md-8 mt-2 mb-2">
+                                <div class="media border p-3">
+                                    <img src="{% static '/img/undraw_profile.svg' %}" alt="..." class="mr-3 mt-3 rounded-circle" style="width:50px;">
+                                    <div class="media-body">
+                                            <h4>{{comment.author}} <small><i>Posted on {{comment.date_added}}</i></small></h4>
+                                            <p>{{comment.body}}</p>
+                                    {% for reply in comment.replies.all %}
+                                                <div class="media p-3">
+                                                        <img src="{% static '/img/undraw_profile_1.svg' %}" alt="..." class="mr-3 mt-3 rounded-circle" style="width:35px;">
+                                                <div class="media-body">
+                                                        <h5>{{reply.author}} <small><i>Posted on {{reply.date_added}}</i></small></h5>
+                                                        <p>{{reply.reply_body}}</p>
+                                                    </div>
+                                                </div>
+                                    {% endfor %}
+                                    <!-- form to post reply -->
+                                    <form method="post">
+                                            <input type="hidden" name="comment.id" value="{{comment.id}}">
+                                            <input type="hidden" name="comment.comm_name" value="{{comment.comm_name}}">
+                                            {% csrf_token %}
+                                            {{form2.as_p}}
+                                            <input type="submit" name="form2" value="Add Reply" class="btn btn-warning btn-sm">
+                                    </form>
+                                    </div>
+                            </div>
+                </div>
+                {% endfor %}
             </div>
-        </div>
-    </div>
-{%endif%}
 
-<script>
-    function run(){
-        let htmlCode = document.querySelector("#html-code").value;
-        let cssCode = "<style>" + document.querySelector("#css-code").value + "</style>";
-        let jsCode = document.querySelector("#js-code").value;
-        let output = document.querySelector("#output");
-        output.contentDocument.body.innerHTML = htmlCode+cssCode;
-        output.contentWindow.eval(jsCode);
-    }
-    document.querySelector("#html-code").addEventListener("keyup", run);
-    document.querySelector("#css-code").addEventListener("keyup", run);
-    document.querySelector("#js-code").addEventListener("keyup", run);
-</script>
-{% endblock content %}
+    <script>
+        function run(){
+            let htmlCode = document.querySelector("#html-code").value;
+            let cssCode = "<style>" + document.querySelector("#css-code").value + "</style>";
+            let jsCode = document.querySelector("#js-code").value;
+            let output = document.querySelector("#output");
+            output.contentDocument.body.innerHTML = htmlCode+cssCode;
+            output.contentWindow.eval(jsCode);
+        }
+        document.querySelector("#html-code").addEventListener("keyup", run);
+        document.querySelector("#css-code").addEventListener("keyup", run);
+        document.querySelector("#js-code").addEventListener("keyup", run);
+    </script>
+
+{%endblock%}

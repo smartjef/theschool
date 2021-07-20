@@ -9,7 +9,6 @@
 }
 .con1{
     display: flex;
-    flex-wrap: wrap-reverse;
     place-content: space-between;
     padding: 10px 20px;
     margin: 10px 20px;
@@ -17,13 +16,19 @@
     width: auto;
 }
 .col{
-    display: flex;
-    flex-wrap:reverse;
+    display: block;
     place-content: space-between;
-    padding: 10px 20px;
     margin: 10px 20px;
     align-items: center;
-    width: auto;
+}
+.col h5{
+    font-size: 14px;
+}
+.col p{
+    font-size: 12px;
+}
+.col a{
+    font-size: 12px;
 }
 .services-con{
     padding: 10px 20px;
@@ -120,6 +125,9 @@
     display: flex;
     flex-wrap: wrap;
     place-content: space-between;
+}
+.user-profil span{
+    width: 100%;
 }
 .profile{
     background-color: rgba(210, 105, 30, 0.274);
@@ -247,9 +255,6 @@
     flex-wrap: wrap;
     border: chocolate solid 2px;
 }
-.col{
-    display: block;
-}
 
 .col-5 p{
     color: white;
@@ -355,6 +360,21 @@
 .course span{
     display: inline-block;
 }
+#player-overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 100%;
+    background-color: #000;
+    z-index: 999;
+  }
+  
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 .con1 video{
     width: 80%;
     padding: 20px;
@@ -401,11 +421,10 @@ body {font-family: Verdana, sans-serif;}
     display: none;
     height: 50vh;
 }
-img {
-    vertical-align: middle;
+.mySlides img{
     height: 50vh;
+    width: 100%;
 }
-
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
@@ -507,7 +526,99 @@ img {
 .code-input{
     width: 39%;
 }
+#page-intro {
+    height: 85%;
+}
+.disabled-text{
+    color: gray;
+  }
+#page-intro {
+    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./img/lib.jpeg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
+#page-intro1 {
+    height: 75%;
+}
+
+#page-intro1 {
+    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./img/lib1.jpeg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.card-std{
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    padding: 14px 14px 14px 14px;
+    cursor:default;
+}
+
+.card-std:hover{
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(200,0,0,.12), 0 4px 8px rgba(200,0,0,.06);
+}
+
+.box-shadow-hover:hover{
+  box-shadow: 0 2px 40px 0 rgba(100, 0, 0, 0.16), 0 2px 10px 0 rgba(100, 0, 0, 0.12);
+}
+
+/* get lesson button */
+.button-les {
+  border-radius: 4px;
+  background-color: #00bcd4;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 5px;
+  width: 180px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button-les span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-les span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-les:hover span {
+  padding-right: 25px;
+}
+
+.button-les:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#class-time-table{
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+  #class-time-table, #class-time-table th, #class-time-table td{
+    border:1px solid black;
+  }
+  #class-time-table td{
+    padding: 5px 10px;
+  }
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
@@ -527,7 +638,7 @@ img {
 }
 
 /* On smaller screens, decrease text size */
-@media only screen and (max-width: 840px) {
+@media only screen and (max-width: 820px) {
 
     .text{
         width: 80%;
@@ -543,7 +654,7 @@ img {
     }
     .con1, .col{
         display:block;
-        padding: 10px 20px;
+        padding: 6px;
         text-align: center;
         align-items: center;
         background-color: white;
@@ -620,7 +731,8 @@ img {
   .text p{font-size: 8px;}
   .con1, .col{
     display:block;
-    padding: 4px 8px;
+    padding: 4px;
+    width: 100%;
     text-align: center;
     align-items: center;
     align-items: center;

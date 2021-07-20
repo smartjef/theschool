@@ -1,33 +1,57 @@
 {% extends 'base.html' %}
 
-{%block title%} Course {% endblock title %}
+{%block title%} Units {% endblock title %}
 {% block content %}
 
-   <div class="container">
-      <div class="card">
-         <div class="d-flex m-4">
-            <a href="{% url 'index' %}">Home/</a>
-            <a href="{% url 'courses' %}">Course/</a>
-            <a href="." >{{object.slug}}</a>
+<header class="info-header">
+   <div id="page-intro1" class="container-fluid d-flex align-items-center justify-content-center ">
+     <div class="row d-flex justify-content-center text-center">
+       <div class="col-md-10 text-white">
+         <!-- heading -->
+         <h2 class="display-5 font-weight-bold  p-5 " style="color:#ff5722;" > Units Offered </h2>
+         <div class="row d-flex justify-content-center text-center">
+           <ul class="breadcrumb con1 text-primary">
+             <li><a href="{% url 'index' %}"> <b>Home /</b></a></li>
+             <li><a href="{% url 'courses' %}"><b> Courses /</b></a></li>
+             <li class="disabled-text"> Units</li>
+           </ul>
          </div>
-      </div>
+ 
+         <!-- divider -->
+         <hr style="color:#ff5722;">
+ 
+         <!-- description -->
+         <h5 class="white-text my-4">Find your class in the classes listed below and get started with the TheProgrammer</h5>
    </div>
-
-   <div class="container">
-      <div class="slides">
-         <div class="card">
-            <div class="con1">
-            {% for standard in standards %} 
-               <div class="thumbnail">
-                  <img src="{{standard.image.url}}" alt="...">
-                  <h3>{{standard.name}}</h3>
-                  <p>{{standard.description}}</p>
-                  <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-success">View</a>
-               </div>
-            {% endfor %}
-            </div>
-         </div>
-      </div>
-   </div>
+ </header>
   
+   <section id="best-features" class="text-center">
+      <h2 class="mb-5 mt-5 font-weight-bold" style="color:#ff5722;">Lets start Learning</h2>
+      <!-- class row for description-->
+      <div class="row d-flex justify-content-center mb-4">
+        <!-- class column -->
+
+      </div>
+      <!-- class row2 for cards -->
+      <div class="row">
+              {% for standard in standards %}
+              <div class="col-md-4 d-flex mb-5 justify-content-center">
+                <div class="card thumbnail card-std text-center" style="width: 20rem;">
+                  <div class="card-body text-center">
+                     <img src="{{standard.image.url}}" alt="...">
+                    <h4 class="card-title" style="color:#ff5722;">{{standard.name}}</h4>
+                    <p class="card-text">{{standard.description|truncatechars:75}}</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-primary" style="background-color:#00bcd4;">Lets get started</a>
+                    {%else%}
+                    <p>Register or login to start learning</p>
+                    <a href="{% url 'user_login' %}" class="btn btn-std" style="background-color:#00bcd4;">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-primary" style="background-color:#00bcd4;">Register</a>
+                    {%endif%}
+                    </div>
+                </div>
+              </div>
+              {% endfor %}
+      </div>
+</section>
 {% endblock content %}

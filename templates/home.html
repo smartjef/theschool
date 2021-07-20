@@ -88,7 +88,6 @@
     </div>
     <div class="con1 bg-success m-0">
       <div class="center1">
-        <h1 style="color: rgb(255, 255, 255);">The Programmer</h1>
         <p style="color: rgb(255, 255, 255);">We host and track onine learning, providing a virtual hub where learners can access training resources. In addition to that we enhance the quality of learning and teaching, meetings the learning needs of the users</p>
       </div>
       <div class="left1">
@@ -123,6 +122,62 @@
       </div>
     </div>
 
+        <section class="text-center">
+                      <h2 class="mb-5 font-weight-bold" style="color:#ff5722;">Dive Into Learning</h2>
+                      <!-- class row for description-->
+                      <div class="row d-flex justify-content-center mb-4">
+                        <!-- class column -->
+                      </div>
+                      <!-- class row2 for cards -->
+                      <div class="row">
+                              {% for standard in standards %}
+                              <div class="col-md-4 d-flex mb-5 justify-content-center">
+                                <div class="card text-center" style="width: 18rem;">
+                                  <div class="card-body">
+                                    <h4 class="card-title" style="color:#ff5722;">{{standard.name}}</h4>
+                                    <p class="card-text">{{standard.description|truncatechars:75}}</p>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'subject_list' slug=standard.slug %}" class="btn btn-primary" style="background-color:#00bcd4;">Start Learning</a>
+                                    {%else%}
+                                    <p>Register or login to start learning</p>
+                                    <a href="{% url 'user_login' %}" class="btn btn-primary" style="background-color:#00bcd4;">Login</a>
+                                    <a href="{% url 'register' %}" class="btn btn-primary" style="background-color:#00bcd4;">Register</a>
+                                    {%endif%}
+                                  </div>
+                                </div>
+                              </div>
+                              {% endfor %}
+                      </div>
+        </section>
+        <hr class="my-5" style="color:#ff5722;">
+        <!-- Section 2: Faculty Members -->
+    
+        <section class="text-center">
+          <h2 class="mb-5 font-weight-bold" style="color:#ff5722;">Meet Our Faculty</h2>
+          <div class="row d-flex justify-content-center mb-4">
+
+              <div class="row d-flex justify-content-center mb-3">
+              {% for teacher in teachers %}
+              <div class="card m-3" style="max-width: 500px;">
+                <div class="row no-gutters">
+                          <div class="col-md-4">
+                            <img src="{{teacher.profile_Pic.url|default_if_none:'#'}}" class="card-img" alt="No image found">
+                          </div>
+                          <div class="col-md-5">
+                            <div class="card-body">
+                              <h5 class="card-title" style="color:#ff5722;">{{teacher.user.username}}</h5>
+                              <p class="card-text">{{teacher.bio|truncatechars:75}}</p>
+                            </div>
+                          </div>
+                </div>
+              </div>
+              {% endfor %}
+              <p class="card-text"><small class="text-muted">Join us or  send your application through the link below</small></p>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5-xUHtHeQg1X3j_d-_sKvx8xUXmj7Yzl1xoOf9BiXAi9epw/viewform?usp=send_form" class="btn btn-primary">Send Application</a>
+                            
+              </div>
+          </div>
+        </section>
 
     <script>
         var slideIndex = 0;

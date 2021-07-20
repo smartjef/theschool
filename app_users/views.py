@@ -9,9 +9,21 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import CreateView,TemplateView
+from .models import user_profile, Contact
+from courses.models import Standard
+
 # Create your views here.
-def index(request):
-    return render(request, 'home.html')
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        standards = Standard.objects.all()
+        teachers = user_profile.objects.filter(user_type='teacher')
+        context['standards'] = standards
+        context['teachers'] = teachers
+        return context
+
 
 def register(request):
 
@@ -60,7 +72,8 @@ def user_login(request):
                 return HttpResponse("<center> <h3> Account is DEACTIVATED </h3> </center>")
 
         else:
-            return HttpResponse("Incorrect Username or password")
+            messages.warning(request, 'Incorrect Username or password')
+            return HttpResponseRedirect(reverse('user_login'))
 
     else:
         return render(request, 'app_users/login.html')
@@ -108,4 +121,9 @@ class ProfileUpdateView(LoginRequiredMixin, TemplateView):
 def settings(request):
    messages.success(request, 'Welcome to your settings section')
    return render(request, 'app_users/settings.html')
+
+class ContactView(CreateView):
+    model = Contact
+    fields = '__all__'
+    template_name = 'app_users/contact.html'
 
